@@ -1,23 +1,13 @@
 package com.thefork.data.repository
 
-import com.thefork.data.source.LocalDataSource
 import com.thefork.data.source.RemoteDataSource
 import com.thefork.domain.RestaurantDetail
 
 class RestaurantRepository(
-    private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource,
     private val apiKey: String
 
 ) {
-    suspend fun getRestaurantDetail(method: String, id: Int): RestaurantDetail {
-
-        if (localDataSource.isEmpty()) {
-            val restaurantDetail =
-                remoteDataSource.getRestaurantDetail(apiKey, method, id)
-            localDataSource.saveRestaurantDetail(restaurantDetail)
-        }
-
-        return localDataSource.getRestaurantDetail(id)
-    }
+    suspend fun getRestaurantDetail(method: String, id: Int): RestaurantDetail =
+        remoteDataSource.getRestaurantDetail(apiKey, method, id)
 }

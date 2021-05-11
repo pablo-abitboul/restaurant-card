@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Restaurant Card</string>
+    <string name="api_key">IPHONEPRODEDCRFV</string>
 </resources>

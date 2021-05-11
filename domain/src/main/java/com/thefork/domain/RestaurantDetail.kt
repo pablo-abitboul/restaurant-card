@@ -1,7 +1,7 @@
 package com.thefork.domain
 
 data class RestaurantDetail(
-    val idRestaurant: Int?,
+    val idRestaurant: Int,
     val name: String,
     val address: String,
     val picsDiaporama: List<PicDiaporama>?,
@@ -20,5 +20,6 @@ data class RestaurantDetail(
 )
 
 data class PicDiaporama(
+    val pic: String,
     val label: String
 )

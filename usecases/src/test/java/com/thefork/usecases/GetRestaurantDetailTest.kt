@@ -17,7 +17,7 @@ class GetRestaurantDetailTest {
     @Mock
     lateinit var restaurantRepository: RestaurantRepository
 
-    lateinit var getRestaurantDetail: GetRestaurantDetail
+    private lateinit var getRestaurantDetail: GetRestaurantDetail
 
     @Before
     fun setUp() {
