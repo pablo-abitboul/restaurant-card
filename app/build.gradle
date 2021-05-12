@@ -9,6 +9,11 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.thefork.restaurantcard"
         minSdkVersion 21
@@ -43,7 +48,6 @@ dependencies {
     implementation androidLibs.values()
     implementation kotlinLibs.values()
     implementation libs.values()
-    kapt androidKaptLibs.values()
 
     testImplementation testLibs.values()
     testImplementation androidxTestLibs.values()

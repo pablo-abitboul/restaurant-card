@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Restaurant Card</string>
     <string name="api_key">IPHONEPRODEDCRFV</string>
+    <string name="carte_du_restaurant">CARTE DU RESTAURANT</string>
+    <string name="extrait_de_la_carte">Extrait de la carte</string>
+    <string name="extrait_de_la_carte_du">Extrait de la carte du </string>
+    <string name="voir_la_carte">Voir la carte et les menus</string>
+    <string name="voir_tous">Voir tous les avis</string>
+    <string name="ecrire">ECRIRE UN AVIS</string>
+    <string name="voir_tout">Voir tout</string>
+    <string name="notes_avis">Notes &amp; Avis</string>
+    <string name="reserver">Reserver</string>
+    <string name="avis">Avis</string>
 </resources>
