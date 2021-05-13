@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.thefork.domain.PicDiaporama
 import com.thefork.domain.RestaurantDetail
 import com.thefork.restaurantcard.R
-import com.thefork.restaurantcard.databinding.ActivityRestaurantDetailBinding
+import com.thefork.restaurantcard.databinding.ActivityMainBinding
 import com.thefork.restaurantcard.utils.Status
 import com.thefork.restaurantcard.viewmodel.RestaurantDetailViewModel
 import org.imaginativeworld.whynotimagecarousel.CarouselItem
@@ -16,12 +16,11 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: RestaurantDetailViewModel by viewModel()
-
-    private lateinit var binding: ActivityRestaurantDetailBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityRestaurantDetailBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 

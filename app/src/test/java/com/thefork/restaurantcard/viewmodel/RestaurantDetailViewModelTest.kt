@@ -33,8 +33,6 @@ class RestaurantDetailViewModelTest {
     @Mock
     lateinit var getRestaurantDetail: GetRestaurantDetail
 
-    private lateinit var viewModel: RestaurantDetailViewModel
-
     private val apiMethod = "restaurant_get_info"
     private val idRestaurant = 14163
 
@@ -44,7 +42,6 @@ class RestaurantDetailViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(mainThreadSurrogate)
-        viewModel = RestaurantDetailViewModel(getRestaurantDetail)
     }
 
     @After
@@ -60,7 +57,7 @@ class RestaurantDetailViewModelTest {
             whenever(getRestaurantDetail.invoke(apiMethod, idRestaurant)).thenReturn(
                 restaurantDetail
             )
-
+            val viewModel = RestaurantDetailViewModel(getRestaurantDetail)
             viewModel.response.observeForever(observer)
             verify(observer).onChanged(Resource.success(restaurantDetail))
             viewModel.response.removeObserver(observer)
@@ -74,6 +71,7 @@ class RestaurantDetailViewModelTest {
             doThrow(RuntimeException(errorMessage))
                 .`when`(getRestaurantDetail).invoke(apiMethod, idRestaurant)
 
+            val viewModel = RestaurantDetailViewModel(getRestaurantDetail)
             viewModel.response.observeForever(observer)
             verify(observer).onChanged(
                 Resource.error(
