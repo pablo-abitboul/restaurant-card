@@ -5,42 +5,33 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.thefork.domain.RestaurantDetail
+import com.thefork.restaurantcard.utils.Resource
 import com.thefork.usecases.GetRestaurantDetail
 import kotlinx.coroutines.launch
-
-enum class TheForkApiStatus { LOADING, ERROR, DONE }
 
 class RestaurantDetailViewModel(
     private val getRestaurantDetail: GetRestaurantDetail
 ) : ViewModel() {
-    private val _status = MutableLiveData<TheForkApiStatus>()
-    val status: LiveData<TheForkApiStatus>
-        get() = _status
 
-    private val _response = MutableLiveData<RestaurantDetail>()
-    val response: LiveData<RestaurantDetail>
+    private val _response = MutableLiveData<Resource<RestaurantDetail>>()
+    val response: LiveData<Resource<RestaurantDetail>>
         get() = _response
 
     private val apiMethod = "restaurant_get_info"
+    private val idRestaurant = 14163
 
-    companion object {
-        //const val ID_RESTAURANT: Int = 6861
-        //const val ID_RESTAURANT: Int = 40370 Not working
-        //const val ID_RESTAURANT: Int = 16409 Not working
-        const val ID_RESTAURANT: Int = 14163
+    init {
+        getRestaurantDetail()
     }
 
-    fun getRestaurantDetail(idRestaurant: Int) {
+    private fun getRestaurantDetail() {
         viewModelScope.launch {
+            _response.postValue(Resource.loading(null))
             try {
-                _status.value = TheForkApiStatus.LOADING
-                val response = getRestaurantDetail.invoke(apiMethod, ID_RESTAURANT)
-
-                _status.value = TheForkApiStatus.DONE
-                _response.value = response
+                val restaurantDetail = getRestaurantDetail.invoke(apiMethod, idRestaurant)
+                _response.postValue(Resource.success(restaurantDetail))
             } catch (e: Exception) {
-                _status.value = TheForkApiStatus.ERROR
-                _response.value = null
+                _response.postValue(Resource.error(e.toString(), null))
             }
         }
     }

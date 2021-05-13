@@ -8,9 +8,8 @@ import com.thefork.domain.PicDiaporama
 import com.thefork.domain.RestaurantDetail
 import com.thefork.restaurantcard.R
 import com.thefork.restaurantcard.databinding.ActivityRestaurantDetailBinding
+import com.thefork.restaurantcard.utils.Status
 import com.thefork.restaurantcard.viewmodel.RestaurantDetailViewModel
-import com.thefork.restaurantcard.viewmodel.RestaurantDetailViewModel.Companion.ID_RESTAURANT
-import com.thefork.restaurantcard.viewmodel.TheForkApiStatus
 import org.imaginativeworld.whynotimagecarousel.CarouselItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,14 +27,13 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        viewModel.getRestaurantDetail(ID_RESTAURANT)
-
-        viewModel.status.observe(this, Observer { newStatus ->
-            bindStatus(newStatus)
+        viewModel.response.observe(this, Observer { newStatus ->
+            bindStatus(newStatus.status)
         })
+
         viewModel.response.observe(this, Observer { newResponse ->
-            if (viewModel.status.value == TheForkApiStatus.DONE) {
-                bindCard(newResponse)
+            if (newResponse.status == Status.SUCCESS) {
+                newResponse.data?.let { bindCard(it) }
             }
         })
 
@@ -107,24 +105,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun bindStatus(status: TheForkApiStatus?) {
+    private fun bindStatus(status: Status?) {
         when (status) {
-            TheForkApiStatus.LOADING -> {
+            Status.LOADING -> {
                 binding.statusImage.visibility = View.VISIBLE
                 binding.statusImage.setImageResource(R.mipmap.ic_loading)
                 binding.linearRestaurantCard.visibility = View.GONE
             }
-            TheForkApiStatus.ERROR -> {
+            Status.ERROR -> {
                 binding.statusImage.visibility = View.VISIBLE
                 binding.statusImage.setImageResource(R.mipmap.ic_error)
                 binding.linearRestaurantCard.visibility = View.GONE
 
-                //retry
-                binding.statusImage.setOnClickListener {
-                    viewModel.getRestaurantDetail(ID_RESTAURANT)
-                }
             }
-            TheForkApiStatus.DONE -> {
+            Status.SUCCESS -> {
                 binding.statusImage.visibility = View.GONE
                 binding.linearRestaurantCard.visibility = View.VISIBLE
             }
